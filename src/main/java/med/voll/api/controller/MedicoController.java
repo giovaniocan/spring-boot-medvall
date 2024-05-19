@@ -1,10 +1,7 @@
 package med.voll.api.controller;
 
 import jakarta.validation.Valid;
-import med.voll.api.medico.DadosCadastroMedico;
-import med.voll.api.medico.DadosListagemMedico;
-import med.voll.api.medico.Medico;
-import med.voll.api.medico.MedicoRepository;
+import med.voll.api.medico.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -33,4 +30,12 @@ public class MedicoController {
 
         // sem a paginacao fica assim return repository.findAll().stream().map(DadosListagemMedico::new).toList();
     }
+
+    @PutMapping
+    @Transactional// precisa quando vai fazer algo (inserir) no bd
+    public void atualizar(@RequestBody @Valid DadosatualizacaoMedico dados){
+        var medico = repository.getReferenceById(dados.id());
+
+        medico.atualizarInfo(dados);
+    }// nao precisa chamar o repository no final, quando a gente ja muda as coisas ele reflete automaticamente no banco de dados, pois tem a tag @Transctional
 }
