@@ -26,7 +26,7 @@ public class MedicoController {
 
     @GetMapping
     public Page<DadosListagemMedico> listar(@PageableDefault(size = 10, sort = {"nome"}) Pageable paginacao) { // esse Pageable serve para paginar o que estamos buscando
-        return repository.findAll(paginacao).map(DadosListagemMedico::new);
+        return repository.findAllByAtivoTrue(paginacao).map(DadosListagemMedico::new);
 
         // sem a paginacao fica assim return repository.findAll().stream().map(DadosListagemMedico::new).toList();
     }
@@ -38,4 +38,12 @@ public class MedicoController {
 
         medico.atualizarInfo(dados);
     }// nao precisa chamar o repository no final, quando a gente ja muda as coisas ele reflete automaticamente no banco de dados, pois tem a tag @Transctional
+
+    @Transactional
+    @DeleteMapping("/{id}")
+    public void excluir(@PathVariable Long id){
+        var medico = repository.getReferenceById(id);
+        medico.excluir();
+    }
+
 }
