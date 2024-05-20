@@ -26,7 +26,7 @@ public class PacienteController {
 
     @GetMapping
     public Page<DadosListagemPaciente> listar (@PageableDefault(page = 0, size = 10, sort = {"nome"}) Pageable paginacao){
-        return repository.findAll(paginacao).map(DadosListagemPaciente:: new);
+        return repository.findAllByAtivoTrue(paginacao).map(DadosListagemPaciente:: new);
     }
 
     @PutMapping
@@ -35,6 +35,15 @@ public class PacienteController {
         var paciente = repository.getReferenceById(dados.id());
 
         paciente.atualizarInfo(dados);
+    }
+
+    @Transactional
+    @DeleteMapping("/{id}")
+    public void excluir(@PathVariable Long id){
+        var paciente = repository.getReferenceById(id);
+        paciente.excluir(id);
+
+        // repository.deleteById(id); para deletar mesmo a gente faz assim, mas não é mais correto pq o certo é manter um hisotiroc de atividade
     }
 
 }
