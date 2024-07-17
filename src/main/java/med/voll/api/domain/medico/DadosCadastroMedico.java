@@ -9,23 +9,24 @@ import med.voll.api.domain.endereco.DadosEndereco;
 
 public record DadosCadastroMedico(
 
-        @NotBlank // validacao nao pode ser nulo nem vazio, presta atencao que o not blank so funciona para string
+        @NotBlank(message = "{nome.obrigatorio}") // Nome é obrigatório
         String nome,
-        @NotBlank
-        @Email// para verificar o email
+
+        @NotBlank(message = "{email.obrigatorio}") // Email é obrigatório
+        @Email(message = "{email.invalido}") // Formato do email é inválido
         String email,
 
-        @NotBlank
+        @NotBlank(message = "{telefone.obrigatorio}") // Telefone é obrigatório
         String telefone,
 
-        @NotBlank
-        @Pattern(regexp = "\\d{4,6}")
+        @NotBlank(message = "{crm.obrigatorio}") // CRM é obrigatório
+        @Pattern(regexp = "\\d{4,6}", message = "{crm.invalido}") // Formato do CRM é inválido
         String crm,
 
-        @NotNull // nao pode ser nulo
+        @NotNull(message = "{especialidade.obrigatoria}") // Especialidade é obrigatória
         Especialidade especialidade,
-        @NotNull
-        @Valid // e para validar os dados que tem em endereco, usamos isso para dtos
+
+        @NotNull(message = "{endereco.obrigatorio}") // Dados do endereço são obrigatórios
+        @Valid // Para validar os dados que tem em endereco, usamos isso para DTOs
         DadosEndereco endereco
-) {
-}
+) {}
