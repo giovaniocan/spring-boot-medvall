@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 // falando que ela executa algunm servico ( autenticacao )
 @Service
 public class AutenticacaoService implements UserDetailsService {
-
+// essa é a classe service que o spring vai chamar quanod a pessoa se autenticar, por causa do userDetailsSErvice
     @Autowired
     private UsuarioRepository repository;
 
