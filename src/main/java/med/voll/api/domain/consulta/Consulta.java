@@ -39,5 +39,7 @@ public class Consulta {
 
     public void cancelar(MotivoCancelamento motivo){
         this.motivoCancelamento = motivo;
+        System.out.println(motivo);
+        System.out.println("CHEGOU ATE AQUI PELO MENOS ----------------------");
     }
 }

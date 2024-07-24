@@ -8,8 +8,6 @@ public record DadosCancelamentoConsulta(
     @NotNull
     Long idConsulta,
 
-    LocalDateTime dataCancelamento,
-
     @NotNull
     MotivoCancelamento motivo
 ){ }
