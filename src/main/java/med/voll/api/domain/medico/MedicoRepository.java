@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 
 public interface MedicoRepository extends JpaRepository<Medico, Long> {
     Page<Medico> findAllByAtivoTrue(Pageable paginacao);
+    // quando usamos esse padrão ne nomeclatura do Spring ele mesmo já faz um teste, então não precisamos fazer
 
     //ESSE QUERY É ONDE VAI FICAR A NOSSA CONSULTA PERSONALIZADA
 
