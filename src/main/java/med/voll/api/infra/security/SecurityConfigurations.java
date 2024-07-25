@@ -28,6 +28,7 @@ public class SecurityConfigurations{
                         .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                         .authorizeHttpRequests(req -> { // aqui estamos falando que para acessar o login não precisa estar logado, mas de resto precisa do token
                             req.requestMatchers("/login").permitAll(); // no login pode permitir
+                            req.requestMatchers("/v3/api-docs/**", "/swagger-ui.html", "/swagger-ui/**").permitAll(); // esse ** é apra facilitar os subenderecos
                             req.anyRequest().authenticated(); // em qualquer  outra tem que estar autenticado
                         })
                         .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class) // to falando, quero adicionar o meu filtro primeiro que o do spring, porque se o o Spring vir primeiro ele vai verificar se eu to logado, mas eu so faco iss nom meu filtro, então nunca vai me deixar ser logado
