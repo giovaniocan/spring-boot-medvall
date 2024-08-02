@@ -4,6 +4,7 @@ import jakarta.persistence.EntityNotFoundException;
 import med.voll.api.domain.ValidacaoException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.AuthenticationException;
@@ -22,13 +23,11 @@ public class TratadorDeErros {
     }
 
     // anotacao para quando os argumentos por algum motivo nao esta de acordo com o esperado
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity tratarError400(MethodArgumentNotValidException ex){ // estamos recebendo a excecao
-        var erros = ex.getFieldErrors();
-
-
-        return ResponseEntity.badRequest().body(erros.stream().map(DadosErrosValidacao::new).toList());
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity tratarErro400(HttpMessageNotReadableException ex) {
+        return ResponseEntity.badRequest().body(ex.getMessage());
     }
+
 
     @ExceptionHandler(ValidacaoException.class)
     public ResponseEntity tratarErroRegraDeNegocio(ValidacaoException ex){ // estamos recebendo a excecao
